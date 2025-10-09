@@ -1,13 +1,16 @@
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedShinyText } from "./ui/animated-shiny-text";
 
 export function Hero() {
   return (
     <section className="container mx-auto px-4 py-20 md:py-32">
       <div className="max-w-3xl mx-auto text-center space-y-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted text-muted-foreground">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span>Now available worldwide</span>
+          <span className="w-2 h-2 rounded-full bg-primary" />
+          <span>
+            <AnimatedShinyText>Now available worldwide</AnimatedShinyText>
+          </span>
         </div>
 
         <h1 className="text-4xl md:text-6xl tracking-tight">
