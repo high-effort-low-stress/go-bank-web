@@ -1,4 +1,5 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -9,24 +10,36 @@ export function Footer() {
             <h4 className="mb-4">Product</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Features
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Pricing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Security
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Roadmap
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -35,24 +48,36 @@ export function Footer() {
             <h4 className="mb-4">Company</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Press
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -61,24 +86,36 @@ export function Footer() {
             <h4 className="mb-4">Resources</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Help Center
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Status
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   API Docs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -87,24 +124,36 @@ export function Footer() {
             <h4 className="mb-4">Legal</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Privacy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Terms
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Compliance
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <Link
+                  href="#"
+                  className="hover:text-foreground transition-colors"
+                >
                   Licenses
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -116,24 +165,24 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a
+            <Link
               href="#"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <Twitter className="h-5 w-5" />
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <Github className="h-5 w-5" />
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <Linkedin className="h-5 w-5" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

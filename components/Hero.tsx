@@ -1,5 +1,4 @@
-import { ArrowRight, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CpfCard } from "./CpfCard";
 import { AnimatedShinyText } from "./ui/animated-shiny-text";
 
 export function Hero() {
@@ -24,14 +23,7 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" className="gap-2">
-            Open an Account
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-          <Button size="lg" variant="outline" className="gap-2">
-            <Play className="h-4 w-4" />
-            Watch Demo
-          </Button>
+          <CpfCard />
         </div>
 
         <div className="flex items-center justify-center gap-8 pt-8 text-center">

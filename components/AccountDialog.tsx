@@ -1,22 +1,16 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { formatPhoneNunmber } from "@/utils/formatters";
+import { Button } from "./ui/button";
+import { Checkbox } from "./ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 interface AccountDialogProps {
   open: boolean;
@@ -24,18 +18,10 @@ interface AccountDialogProps {
 }
 
 export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
-  const [step, setStep] = useState<"cpf" | "full">("cpf");
   const [cpf, setCpf] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  const handleCpfSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (cpf.trim()) {
-      setStep("full");
-    }
-  };
 
   const handleFullSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,70 +34,12 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
   };
 
   const handleClose = () => {
-    setStep("cpf");
-    setCpf("");
     setPhone("");
     setEmail("");
+    setCpf("");
     setTermsAccepted(false);
     onOpenChange(false);
   };
-
-  const formatCpf = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 11) {
-      return numbers
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    }
-    return value;
-  };
-
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 11) {
-      return numbers
-        .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{5})(\d)/, "$1-$2");
-    }
-    return value;
-  };
-
-  if (step === "cpf") {
-    return (
-      <Dialog open={open} onOpenChange={handleClose}>
-        <DialogContent className="sm:max-w-md border-0 p-0 gap-0">
-          <DialogTitle></DialogTitle>
-          <Card className="border-0 shadow-none">
-            <CardHeader>
-              <CardTitle>Create your account</CardTitle>
-              <CardDescription>
-                Enter your CPF to get started with NeoBank
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleCpfSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="cpf">CPF</Label>
-                  <Input
-                    id="cpf"
-                    placeholder="000.000.000-00"
-                    value={cpf}
-                    onChange={(e) => setCpf(formatCpf(e.target.value))}
-                    maxLength={14}
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full">
-                  Continue
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </DialogContent>
-      </Dialog>
-    );
-  }
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -133,8 +61,10 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <Input
                   id="cpf-full"
                   value={cpf}
-                  disabled
-                  className="bg-muted"
+                  onChange={(e) => setCpf(e.target.value)}
+                  maxLength={14}
+                  required
+                  placeholder="000.000.000-00"
                 />
               </div>
 
@@ -145,7 +75,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   type="tel"
                   placeholder="(00) 00000-0000"
                   value={phone}
-                  onChange={(e) => setPhone(formatPhone(e.target.value))}
+                  onChange={(e) => setPhone(formatPhoneNunmber(e.target.value))}
                   maxLength={15}
                   required
                 />
@@ -188,10 +118,10 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setStep("cpf")}
+                  onClick={handleClose}
                   className="flex-1"
                 >
-                  Back
+                  Cancel
                 </Button>
                 <Button
                   type="submit"
