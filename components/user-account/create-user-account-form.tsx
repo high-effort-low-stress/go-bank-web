@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Field,
   FieldError,
@@ -21,16 +21,17 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "../ui/checkbox";
+import { createUseerAccount } from "@/lib/actions/register/actions";
+import { isCpfValid } from "@/utils/validators";
 
-const cpfRegex = /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
 const phoneRegex =
   /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
 
 const createUserAccountFormSchema = z.object({
   fullName: z
-    .string({
-      error: "Nome é obrigatório",
+    .string()
+    .min(1, {
+      message: "Nome é obrigatório",
     })
     .min(3, {
       message: "Nome muito curto",
@@ -38,10 +39,18 @@ const createUserAccountFormSchema = z.object({
   email: z.email({
     message: "Por favor, insira um email válido.",
   }),
-  document: z.string().regex(cpfRegex, "Por favor, insira um CPF válido."),
+  document: z
+    .string()
+    .length(11, {
+      message: "Por favor, insira um CPF válido.",
+    })
+    .refine(isCpfValid, "Por favor, insira um CPF válido."),
 
   phoneNumber: z
     .string()
+    .length(11, {
+      message: "Por favor, insira um número de celular válido.",
+    })
     .regex(phoneRegex, "Por favor, insira um número de celular válido."),
 
   termsAndConditions: z
@@ -54,25 +63,33 @@ const createUserAccountFormSchema = z.object({
 type CreateUserAccountFormSchema = z.infer<typeof createUserAccountFormSchema>;
 
 export const CreateUserAccountForm = () => {
-  const { handleSubmit, control } = useForm<CreateUserAccountFormSchema>({
-    resolver: zodResolver(createUserAccountFormSchema),
-    mode: "onTouched",
-  });
+  const { handleSubmit, control, formState } =
+    useForm<CreateUserAccountFormSchema>({
+      resolver: zodResolver(createUserAccountFormSchema),
+      mode: "onTouched",
+    });
 
-  const handleCreateAccount = ({
+  const handleCreateAccount = async ({
     fullName,
     email,
     document,
+    phoneNumber,
+    termsAndConditions,
   }: CreateUserAccountFormSchema) => {
-    toast.success("Conta criada com sucesso!", {
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          {JSON.stringify({ fullName, email, document }, null, 2)}
-        </pre>
-      ),
+    const createUserAccount = await createUseerAccount({
+      fullName: fullName,
+      email: email,
+      document: document,
     });
-  };
 
+    if (!createUserAccount.success)
+      return toast.error("Erro ao criar conta.", {
+        description: createUserAccount.message,
+      });
+
+    if (createUserAccount.success)
+      return toast.success("Conta criada com sucesso!");
+  };
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
@@ -200,7 +217,11 @@ export const CreateUserAccountForm = () => {
       </CardContent>
       <CardFooter>
         <Field orientation={"responsive"}>
-          <Button type="submit" form="create-account-form">
+          <Button
+            type="submit"
+            form="create-account-form"
+            disabled={formState.isSubmitting}
+          >
             Criar Conta
           </Button>
         </Field>
