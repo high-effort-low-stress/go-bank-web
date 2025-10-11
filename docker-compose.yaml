@@ -1,0 +1,30 @@
+services:
+  # Nome do serviço, pode ser qualquer um.
+  go-bank-web:
+    # Configurações do build
+    build:
+      # Contexto: o diretório atual (onde está o Dockerfile)
+      context: .
+      # Nome do Dockerfile a ser usado
+      dockerfile: Dockerfile
+    # Nome do container que será criado
+    container_name: go-bank-web
+    # Mapeamento de portas: <porta_no_host>:<porta_no_container>
+    # Acessa a aplicação no seu navegador via http://localhost:3000
+    ports:
+      - "3000:3000"
+    # Reinicia o container automaticamente em caso de falha
+    restart: unless-stopped
+    # Variáveis de ambiente que serão passadas para o container
+    # Útil para chaves de API, URLs de banco de dados, etc.
+    # Descomente e adicione as suas, se necessário
+    # environment:
+    #   - DATABASE_URL=postgres://user:password@host:port/db
+    #   - NEXT_PUBLIC_API_URL=http://api.example.com
+    networks:
+      - go-bank-network
+
+# Define a rede para os serviços (útil se você tiver outros containers como um banco de dados)
+networks:
+  go-bank-network:
+    driver: bridge
