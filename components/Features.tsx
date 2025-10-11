@@ -1,39 +1,46 @@
-import { Bell, Globe, PieChart, Shield, Smartphone, Zap } from "lucide-react";
+import {
+  BellIcon,
+  GlobeIcon,
+  PieChartIcon,
+  ShieldIcon,
+  SmartphoneIcon,
+  ZapIcon,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const features = [
   {
-    icon: Zap,
+    icon: ZapIcon,
     title: "Instant Transfers",
     description:
       "Send and receive money instantly with zero fees to other NeoBank users worldwide.",
   },
   {
-    icon: Shield,
+    icon: ShieldIcon,
     title: "Bank-Level Security",
     description:
       "Your money is protected with military-grade encryption and biometric authentication.",
   },
   {
-    icon: Smartphone,
+    icon: SmartphoneIcon,
     title: "Mobile First",
     description:
       "Manage your finances on the go with our intuitive iOS and Android apps.",
   },
   {
-    icon: Globe,
+    icon: GlobeIcon,
     title: "Global Access",
     description:
       "Spend abroad with no foreign transaction fees and access your money anywhere.",
   },
   {
-    icon: PieChart,
+    icon: PieChartIcon,
     title: "Smart Insights",
     description:
       "Get personalized financial insights and budgeting tools powered by AI.",
   },
   {
-    icon: Bell,
+    icon: BellIcon,
     title: "Real-time Alerts",
     description:
       "Stay informed with instant notifications for every transaction and activity.",
@@ -53,9 +60,9 @@ export function Features() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <Card
-              key={index}
+              key={feature.title}
               className="p-6 space-y-4 hover:shadow-lg transition-shadow"
             >
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">

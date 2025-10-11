@@ -10,19 +10,19 @@ export function Hero() {
       <div className="max-w-3xl mx-auto text-center space-y-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary" />
-          <span>
-            <AnimatedShinyText>Now available worldwide</AnimatedShinyText>
-          </span>
+          <AnimatedShinyText>
+            GoBank: O Futuro do Banco Digital
+          </AnimatedShinyText>
         </div>
 
         <h1 className="text-4xl md:text-6xl tracking-tight">
-          Banking made simple, secure, and smart
+          Banco feito de forma simples, segura e inteligente
         </h1>
 
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Experience the future of banking with instant payments, real-time
-          notifications, and intelligent insights. All in one beautifully
-          designed app.
+          Experimente o futuro dos serviços bancários com pagamentos
+          instantâneos, notificações em tempo real e insights inteligentes. Tudo
+          em um aplicativo lindamente projetado.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -38,28 +38,30 @@ export function Hero() {
           <div>
             <div className="text-2xl">
               <NumberTicker
-                value={Math.random() * 2000000}
-                startValue={1000000}
+                value={1_000_000 + 2_234_432}
+                startValue={1_000_000}
               />
               +
             </div>
-            <div className="text-muted-foreground">Active Users</div>
+            <div className="text-muted-foreground">Usuários ativos</div>
           </div>
           <div className="w-px h-12 bg-border" />
           <div>
             <div className="text-2xl">
               $
               <NumberTicker
-                value={Math.random() * 5000000000}
-                startValue={1000000000}
+                value={1_000_000_000 + 2_234_432}
+                startValue={1_000_000_000}
               />
             </div>
-            <div className="text-muted-foreground">Transactions</div>
+            <div className="text-muted-foreground">Transações</div>
           </div>
           <div className="w-px h-12 bg-border" />
           <div>
             <div className="text-2xl">4.9★</div>
-            <div className="text-muted-foreground">App Rating</div>
+            <div className="text-muted-foreground">
+              Avaliações do aplicativo
+            </div>
           </div>
         </div>
       </div>
