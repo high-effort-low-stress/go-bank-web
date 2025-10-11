@@ -1,5 +1,8 @@
-import { CpfCard } from "./CpfCard";
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 import { AnimatedShinyText } from "./ui/animated-shiny-text";
+import { Button } from "./ui/button";
+import { NumberTicker } from "./ui/number-ticker";
 
 export function Hero() {
   return (
@@ -23,17 +26,34 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <CpfCard />
+          <Link href="/register">
+            <Button size={"lg"}>
+              Crie sua conta
+              <ArrowRightIcon />
+            </Button>
+          </Link>
         </div>
 
         <div className="flex items-center justify-center gap-8 pt-8 text-center">
           <div>
-            <div className="text-2xl">2M+</div>
+            <div className="text-2xl">
+              <NumberTicker
+                value={Math.random() * 2000000}
+                startValue={1000000}
+              />
+              +
+            </div>
             <div className="text-muted-foreground">Active Users</div>
           </div>
           <div className="w-px h-12 bg-border" />
           <div>
-            <div className="text-2xl">$5B+</div>
+            <div className="text-2xl">
+              $
+              <NumberTicker
+                value={Math.random() * 5000000000}
+                startValue={1000000000}
+              />
+            </div>
             <div className="text-muted-foreground">Transactions</div>
           </div>
           <div className="w-px h-12 bg-border" />
