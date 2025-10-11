@@ -1,2 +1,0 @@
-## Descrição
-<!-- Descrição do bug -->
