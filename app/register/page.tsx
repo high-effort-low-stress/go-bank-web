@@ -22,7 +22,7 @@ const RegisterPage = () => {
               Abra sua conta digital
             </h1>
             <p className="text-muted-foreground max-w-md">
-              Junte-se a mais de 2 milhões de pessoas que confiam no NovaBank
+              Junte-se a mais de 2 milhões de pessoas que confiam no GoBank
             </p>
           </div>
           <CreateUserAccountForm />
