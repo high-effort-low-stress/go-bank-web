@@ -15,7 +15,7 @@ export default function landingPage() {
         ]}
         buttons={[
           { title: "Já é um cliente?", href: "#login", variant: "link" },
-          { title: "Quero ser um GoClient", href: "/register" },
+          { title: "Quero ser um GoClient", href: "/start" },
         ]}
       />
       <main className="flex-1">

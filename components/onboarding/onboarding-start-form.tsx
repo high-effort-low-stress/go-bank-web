@@ -1,9 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import * as z from "zod";
+import type * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,75 +22,47 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createUseerAccount } from "@/lib/actions/register/actions";
-import { isCpfValid } from "@/utils/validators";
+import { omboardingStartAction } from "@/lib/actions/register/omboardingStartAction";
+import { OnboardingStartSchema } from "@/lib/schema";
 
-const phoneRegex =
-  /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
-
-const createUserAccountFormSchema = z.object({
-  fullName: z
-    .string()
-    .min(1, {
-      message: "Nome é obrigatório",
-    })
-    .min(3, {
-      message: "Nome muito curto",
-    }),
-  email: z.email({
-    message: "Por favor, insira um email válido.",
-  }),
-  document: z
-    .string()
-    .length(11, {
-      message: "Por favor, insira um CPF válido.",
-    })
-    .refine(isCpfValid, "Por favor, insira um CPF válido."),
-
-  phoneNumber: z
-    .string()
-    .length(11, {
-      message: "Por favor, insira um número de celular válido.",
-    })
-    .regex(phoneRegex, "Por favor, insira um número de celular válido."),
-
-  termsAndConditions: z
-    .literal(true, { error: "Você deve aceitar os termos" })
-    .refine((value) => value === true, {
-      message: "Você deve aceitar os termos e condições",
-    }),
-});
-
-type CreateUserAccountFormSchema = z.infer<typeof createUserAccountFormSchema>;
+type OnboardingStartFormSchema = z.infer<typeof OnboardingStartSchema>;
 
 export const CreateUserAccountForm = () => {
-  const { handleSubmit, control, formState } =
-    useForm<CreateUserAccountFormSchema>({
-      resolver: zodResolver(createUserAccountFormSchema),
-      mode: "onTouched",
-    });
-
+  const router = useRouter();
   const handleCreateAccount = async ({
     fullName,
     email,
     document,
-    phoneNumber,
+    // phoneNumber,
     termsAndConditions,
-  }: CreateUserAccountFormSchema) => {
-    const createUserAccount = await createUseerAccount({
+  }: OnboardingStartFormSchema) => {
+    const OnboardingStart = await omboardingStartAction({
       fullName: fullName,
       email: email,
       document: document,
     });
 
-    if (!createUserAccount.success)
+    if (!OnboardingStart.success)
       return toast.error("Erro ao criar conta.", {
-        description: createUserAccount.message,
+        description: OnboardingStart.message,
       });
 
-    if (createUserAccount.success)
-      return toast.success("Conta criada com sucesso!");
+    router.push("/verify");
+    return toast.success("Conta criada com sucesso!");
   };
+
+  const { handleSubmit, control, formState } =
+    useForm<OnboardingStartFormSchema>({
+      resolver: zodResolver(OnboardingStartSchema),
+      mode: "onTouched",
+      defaultValues: {
+        fullName: "",
+        email: "",
+        document: "",
+        // phoneNumber: "",
+      },
+    });
+
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
@@ -167,7 +140,7 @@ export const CreateUserAccountForm = () => {
                 </Field>
               )}
             />
-            <Controller
+            {/* <Controller
               name="phoneNumber"
               control={control}
               render={({ field, fieldState }) => (
@@ -179,7 +152,7 @@ export const CreateUserAccountForm = () => {
                     type="tel"
                     aria-invalid={fieldState.invalid}
                     autoComplete="on"
-                    placeholder="(XX) XXXXX-XXXX"
+                    plac-eholder="(XX) XXXXX-XXXX"
                     maxLength={11}
                     required
                   />
@@ -188,7 +161,7 @@ export const CreateUserAccountForm = () => {
                   )}
                 </Field>
               )}
-            />
+            /> */}
             <Controller
               name="termsAndConditions"
               control={control}
