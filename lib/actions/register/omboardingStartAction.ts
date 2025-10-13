@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import type { OnbiardingCreateUserStart } from "@/types/register";
 
-type ActionResult = {
+type OnboardingStart = {
   success: boolean;
   message: string;
   data?: any;
@@ -11,9 +11,9 @@ type ActionResult = {
 
 const URL = process.env.EXTERNAL_API_URL;
 
-export const createUseerAccount = async (
+export const omboardingStartAction = async (
   user: OnbiardingCreateUserStart
-): Promise<ActionResult> => {
+): Promise<OnboardingStart> => {
   if (!URL) {
     console.error("External API URL is not defined.");
     return { success: false, message: "Erro de configuração no servidor." };
@@ -28,15 +28,21 @@ export const createUseerAccount = async (
       body: JSON.stringify(user),
     });
 
+    if (response.status === 400)
+      return {
+        success: false,
+        message: "Dados inválidos. Por favor, verifique os campos.",
+      };
+
+    if (response.status === 409)
+      return { success: false, message: "O CPF ou E-mail já está cadastrado." };
+
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage =
         errorData.message || "A API externa retornou um erro.";
       return { success: false, message: errorMessage };
     }
-
-    if (response.status === 409)
-      return { success: false, message: "O CPF ou E-mail já está cadastrado." };
 
     const responseData = await response.json();
     revalidatePath("/");

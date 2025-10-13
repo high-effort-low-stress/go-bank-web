@@ -43,3 +43,10 @@ export const isCpfValid = (cpf: string): boolean => {
   // Se passou por todas as verificações, o CPF é válido
   return true;
 };
+
+export const isPhoneNumberValid = (phone: string): boolean => {
+  const phoneRegex =
+    /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
+
+  return phoneRegex.test(phone);
+};

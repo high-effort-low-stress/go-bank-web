@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Header } from "@/components/Header";
-import { CreateUserAccountForm } from "@/components/user-account/create-user-account-form";
+import { CreateUserAccountForm } from "@/components/onboarding/onboarding-start-form";
 
 const RegisterPage = () => {
   return (

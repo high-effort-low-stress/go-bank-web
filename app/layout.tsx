@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body>
         <Providers>{children}</Providers>

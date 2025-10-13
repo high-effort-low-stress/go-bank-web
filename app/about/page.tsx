@@ -189,14 +189,21 @@ const AboutPage = () => {
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { name: "Ana Silva", role: "CEO & Co-Founder" },
-                { name: "Carlos Santos", role: "CTO & Co-Founder" },
-                { name: "Mariana Costa", role: "Chief Product Officer" },
+                {
+                  name: "Caio Cesar",
+                  role: "CTO & Co-Founder",
+                  image: "/caio-cto-co-founder.png",
+                },
+                {
+                  name: "Iago da Silva",
+                  role: "CEO & Co-Founder",
+                  image: "/iago-ceo-cofounder.png",
+                },
               ].map((member) => (
                 <div key={member.name} className="space-y-4">
                   <div className="aspect-square rounded-lg overflow-hidden bg-muted">
                     <Image
-                      src={"/go-bank-logo.png"}
+                      src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover"
                       width={400}
