@@ -1,5 +1,7 @@
 "use server";
 
+import { isPasswordValid } from "@/utils/validators";
+
 const URL = process.env.EXTERNAL_API_URL;
 
 type OnboardingComplete = {
@@ -59,13 +61,6 @@ export async function onboardingCompleteAction(
     };
   }
 }
-
-export const isPasswordValid = async (password: string): Promise<boolean> => {
-  // "A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.",
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return passwordRegex.test(password);
-};
 
 export const isTokenValid = async (token: string): Promise<boolean> => {
   try {
