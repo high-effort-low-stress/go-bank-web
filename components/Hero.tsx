@@ -26,7 +26,7 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/register">
+          <Link href="/start">
             <Button size={"lg"}>
               Crie sua conta
               <ArrowRightIcon />
