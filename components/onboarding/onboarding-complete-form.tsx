@@ -27,10 +27,8 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import {
-  isPasswordValid,
-  onboardingCompleteAction,
-} from "@/lib/actions/register/omboardingCompleteAction";
+import { onboardingCompleteAction } from "@/lib/actions/register/onboardingCompleteAction";
+import { isPasswordValid } from "@/utils/validators";
 
 const OnboardingCompleteSchema = z
   .object({
@@ -65,14 +63,14 @@ export const OnboardingCompleteForm = () => {
   const handleOnboardingComplete = async ({
     password,
   }: OnboardingCompleteFormSchema) => {
-    const omboardingComplete = await onboardingCompleteAction(password, token);
+    const onboardingComplete = await onboardingCompleteAction(password, token);
 
-    if (!omboardingComplete.success)
+    if (!onboardingComplete.success)
       return toast.error("Erro ao criar conta.", {
-        description: omboardingComplete.message,
+        description: onboardingComplete.message,
       });
 
-    if (omboardingComplete.success)
+    if (onboardingComplete.success)
       return toast.success("Conta criada com sucesso!");
   };
 
