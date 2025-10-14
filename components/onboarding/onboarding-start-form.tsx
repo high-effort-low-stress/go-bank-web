@@ -22,7 +22,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { omboardingStartAction } from "@/lib/actions/register/omboardingStartAction";
+import { onboardingStartAction } from "@/lib/actions/register/onboardingStartAction";
 import { OnboardingStartSchema } from "@/lib/schema";
 
 type OnboardingStartFormSchema = z.infer<typeof OnboardingStartSchema>;
@@ -36,7 +36,7 @@ export const CreateUserAccountForm = () => {
     // phoneNumber,
     termsAndConditions,
   }: OnboardingStartFormSchema) => {
-    const OnboardingStart = await omboardingStartAction({
+    const OnboardingStart = await onboardingStartAction({
       fullName: fullName,
       email: email,
       document: document,
