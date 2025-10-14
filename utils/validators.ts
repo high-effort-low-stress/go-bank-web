@@ -1,3 +1,9 @@
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+const PHONE_NUMBER_REGEX =
+  /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
+
 export const isCpfValid = (cpf: string): boolean => {
   // Limpa o CPF, removendo formatação
   const cpfLimpo = String(cpf).replace(/\D/g, "");
@@ -45,15 +51,10 @@ export const isCpfValid = (cpf: string): boolean => {
 };
 
 export const isPhoneNumberValid = (phone: string): boolean => {
-  const phoneRegex =
-    /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
-
-  return phoneRegex.test(phone);
+  return PHONE_NUMBER_REGEX.test(phone);
 };
 
-export const isPasswordValid = async (password: string): Promise<boolean> => {
+export const isPasswordValid = (password: string): boolean => {
   // "A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.",
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return passwordRegex.test(password);
+  return PASSWORD_REGEX.test(password);
 };
