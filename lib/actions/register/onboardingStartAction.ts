@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import type { OnbiardingCreateUserStart } from "@/types/register";
+import type { OnboardingCreateUserStart } from "@/types/register";
 
 type OnboardingStart = {
   success: boolean;
@@ -11,8 +11,8 @@ type OnboardingStart = {
 
 const URL = process.env.EXTERNAL_API_URL;
 
-export const omboardingStartAction = async (
-  user: OnbiardingCreateUserStart
+export const onboardingStartAction = async (
+  user: OnboardingCreateUserStart
 ): Promise<OnboardingStart> => {
   if (!URL) {
     console.error("External API URL is not defined.");
