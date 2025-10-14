@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { timeTo } from "@/lib/dayjs";
+import { timeToTokenExpires } from "@/lib/dayjs";
 import "dayjs/locale/pt-br";
 import { Loader2Icon, MailIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,7 +19,7 @@ const VerifyPage = () => {
 
   if (token) {
     setTimeout(() => {
-      router.push("#login");
+      router.push("/complete");
     }, 3000);
   }
 
@@ -60,7 +60,7 @@ const VerifyPage = () => {
           <CardContent>
             <p className="text-center text-sm text-muted-foreground">
               Clique no link enviado para concluir seu login de forma segura. O
-              link expirará {timeTo(60)}.
+              link expirará {timeToTokenExpires(60)}.
             </p>
           </CardContent>
           <CardFooter>

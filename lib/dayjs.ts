@@ -13,6 +13,6 @@ dayjs.extend(utc);
 dayjs.tz.setDefault("America/Sao_Paulo");
 dayjs.extend(updateLocale);
 
-export const timeTo = (minutes: number) => {
+export const timeToTokenExpires = (minutes: number) => {
   return dayjs(Date.now()).to(dayjs().add(minutes, "minutes"));
 };

@@ -142,7 +142,6 @@ export const OnboardingCompleteForm = () => {
                       id="onboarding-complete-form-confirm-password"
                       type={visible ? "text" : "password"}
                       aria-invalid={fieldState.invalid}
-                      autoComplete="new-password"
                       required
                     />
                     <InputGroupAddon align={"inline-end"}>
