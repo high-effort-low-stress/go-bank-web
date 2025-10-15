@@ -1,5 +1,5 @@
 const PASSWORD_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$/;
 
 const PHONE_NUMBER_REGEX =
   /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
@@ -56,5 +56,6 @@ export const isPhoneNumberValid = (phone: string): boolean => {
 
 export const isPasswordValid = (password: string): boolean => {
   // "A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.",
+
   return PASSWORD_REGEX.test(password);
 };

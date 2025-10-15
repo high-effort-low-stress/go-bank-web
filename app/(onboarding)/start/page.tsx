@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Header } from "@/components/Header";
-import { CreateUserAccountForm } from "@/components/onboarding/onboarding-start-form";
+import { OnboardingStartForm } from "@/components/onboarding/start/onboarding-start-form";
 
 const RegisterPage = () => {
   return (
@@ -27,7 +27,7 @@ const RegisterPage = () => {
               Junte-se a mais de 2 milhões de pessoas que confiam no GoBank
             </p>
           </div>
-          <CreateUserAccountForm />
+          <OnboardingStartForm />
           <div className="text-center text-muted-foreground">
             <p>
               Já tem uma conta?{" "}
