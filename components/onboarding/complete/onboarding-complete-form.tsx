@@ -1,11 +1,10 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EyeClosedIcon, EyeIcon } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { EyeClosedIcon, EyeIcon, Loader2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,42 +26,25 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { onboardingCompleteAction } from "@/lib/actions/register/onboardingCompleteAction";
-import { isPasswordValid } from "@/utils/validators";
-
-const OnboardingCompleteSchema = z
-  .object({
-    password: z
-      .string()
-      .min(1, "A senha é obrigatória")
-      .refine(
-        isPasswordValid,
-        "A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.",
-      ),
-
-    confirmPassword: z.string().min(1, "Confirmação de senha é obrigatória"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas não coincidem",
-    path: ["confirmPassword"],
-  });
-
-type OnboardingCompleteFormSchema = z.infer<typeof OnboardingCompleteSchema>;
+import { onboardingCompleteAction } from "@/lib/actions/onboarding/completeAction";
+import {
+  type OnboardingCompleteData,
+  OnboardingCompleteSchema,
+} from "@/lib/schemas/onboarding-schemas";
 
 export const OnboardingCompleteForm = () => {
   const [visible, setVisible] = useState(false);
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setVisible(!visible);
   };
 
-  const searchParams = useSearchParams();
-
-  const token = searchParams.get("token");
-
   const handleOnboardingComplete = async ({
     password,
-  }: OnboardingCompleteFormSchema) => {
+  }: OnboardingCompleteData) => {
     const onboardingComplete = await onboardingCompleteAction(password, token);
 
     if (!onboardingComplete.success)
@@ -70,19 +52,23 @@ export const OnboardingCompleteForm = () => {
         description: onboardingComplete.message,
       });
 
-    if (onboardingComplete.success)
-      return toast.success("Conta criada com sucesso!");
+    toast.success("Conta criada com sucesso! Bem-vindo ao GoBank!"),
+      {
+        description: "Você será redirecionado em breve...",
+        icon: <Loader2 className="animate-spin" />,
+        duration: 3000,
+      };
+    router.push("/");
   };
 
-  const { handleSubmit, control, formState } =
-    useForm<OnboardingCompleteFormSchema>({
-      resolver: zodResolver(OnboardingCompleteSchema),
-      mode: "onTouched",
-      defaultValues: {
-        password: "",
-        confirmPassword: "",
-      },
-    });
+  const { handleSubmit, control, formState } = useForm<OnboardingCompleteData>({
+    resolver: zodResolver(OnboardingCompleteSchema),
+    mode: "onTouched",
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
 
   return (
     <Card className="w-full sm:max-w-md">

@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import type * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,20 +21,20 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { onboardingStartAction } from "@/lib/actions/register/onboardingStartAction";
-import { OnboardingStartSchema } from "@/lib/schema";
+import { onboardingStartAction } from "@/lib/actions/onboarding/startAction";
+import {
+  type OnboardingStartData,
+  OnboardingStartSchema,
+} from "@/lib/schemas/onboarding-schemas";
 
-type OnboardingStartFormSchema = z.infer<typeof OnboardingStartSchema>;
-
-export const CreateUserAccountForm = () => {
-  const router = useRouter();
-  const handleCreateAccount = async ({
+export const OnboardingStartForm = () => {
+  const onboardingStart = async ({
     fullName,
     email,
     document,
     // phoneNumber,
     termsAndConditions,
-  }: OnboardingStartFormSchema) => {
+  }: OnboardingStartData) => {
     const OnboardingStart = await onboardingStartAction({
       fullName: fullName,
       email: email,
@@ -47,21 +46,22 @@ export const CreateUserAccountForm = () => {
         description: OnboardingStart.message,
       });
 
-    router.push("/verify");
-    return toast.success("Conta criada com sucesso!");
+    return toast.success("Conta criada com sucesso!", {
+      description: "Enviamos um código de verificação para o seu email.",
+      duration: 8000,
+    });
   };
 
-  const { handleSubmit, control, formState } =
-    useForm<OnboardingStartFormSchema>({
-      resolver: zodResolver(OnboardingStartSchema),
-      mode: "onTouched",
-      defaultValues: {
-        fullName: "",
-        email: "",
-        document: "",
-        // phoneNumber: "",
-      },
-    });
+  const { handleSubmit, control, formState } = useForm<OnboardingStartData>({
+    resolver: zodResolver(OnboardingStartSchema),
+    mode: "onTouched",
+    defaultValues: {
+      fullName: "",
+      email: "",
+      document: "",
+      // phoneNumber: "",
+    },
+  });
 
   return (
     <Card className="w-full sm:max-w-md">
@@ -73,10 +73,7 @@ export const CreateUserAccountForm = () => {
       </CardHeader>
       <CardContent>
         {" "}
-        <form
-          onSubmit={handleSubmit(handleCreateAccount)}
-          id="create-account-form"
-        >
+        <form onSubmit={handleSubmit(onboardingStart)} id="create-account-form">
           <FieldGroup>
             <Controller
               name="fullName"
