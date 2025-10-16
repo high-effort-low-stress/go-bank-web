@@ -52,18 +52,21 @@ export const OnboardingCompleteForm = () => {
         description: onboardingComplete.message,
       });
 
+    setTimeout(() => {
+      router.push("/");
+    }, 3000);
+
     toast.success("Conta criada com sucesso! Bem-vindo ao GoBank!"),
       {
         description: "Você será redirecionado em breve...",
         icon: <Loader2 className="animate-spin" />,
         duration: 3000,
       };
-    router.push("/");
   };
 
   const { handleSubmit, control, formState } = useForm<OnboardingCompleteData>({
     resolver: zodResolver(OnboardingCompleteSchema),
-    mode: "onTouched",
+    mode: "all",
     defaultValues: {
       password: "",
       confirmPassword: "",
@@ -153,7 +156,7 @@ export const OnboardingCompleteForm = () => {
           <Button
             type="submit"
             form="onboarding-complete-form"
-            disabled={formState.isSubmitting}
+            disabled={formState.isSubmitting || !formState.isValid}
           >
             Criar Senha
           </Button>
