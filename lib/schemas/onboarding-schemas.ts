@@ -4,14 +4,19 @@ import { isCpfValid } from "@/utils/validators";
 
 export const OnboardingStartSchema = z.object({
   fullName: z
-    .string({ error: "Nome completo é obrigatório." })
+    .string()
+    .nonempty({ error: "Nome Completo é obrigatório." })
     .min(9, "Informe seu nome completo.")
     .max(100, "Nome muito longo."),
   document: z
-    .string({ message: "CPF é obrigatório" })
-    .refine(isCpfValid, "Por favor, insira um CPF válido."),
-  email: z.email("Formato de e-mail inválido."),
-  termsAndConditions: z.literal(true, { error: "Você deve aceitar os termos" }),
+    .string()
+    .nonempty({ error: "CPF é obrigatório." })
+    .refine(isCpfValid, "CPF deve ser um CPF válido."),
+  email: z
+    .string()
+    .nonempty({ error: "Email é obrigatório." })
+    .email("Email deve ser um email válido."),
+  terms: z.literal(true, { error: "Você deve aceitar os termos" }),
 });
 
 export type OnboardingStartData = z.infer<typeof OnboardingStartSchema>;

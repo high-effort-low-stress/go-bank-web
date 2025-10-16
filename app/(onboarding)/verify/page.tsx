@@ -3,23 +3,17 @@ import OnboardingVerified from "@/components/onboarding/verify/onboarding-verifi
 import { onboardingVerifyAction } from "@/lib/actions/onboarding/verifyAction";
 
 type VerifyPageProps = {
-  searchParams: { token?: string };
+  searchParams: Promise<{ token?: string }>;
 };
 
 const VerifyPage = async ({ searchParams }: VerifyPageProps) => {
-  const token = searchParams.token;
+  const { token } = await searchParams;
 
   const verify = await onboardingVerifyAction(token);
 
-  if (!verify.success) {
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted/30">
-      <OnboardingUnverified />
-    </div>;
-  }
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-muted/30">
-      <OnboardingVerified />
+      {verify.success ? <OnboardingVerified /> : <OnboardingUnverified />}
     </div>
   );
 };

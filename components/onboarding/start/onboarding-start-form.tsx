@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -33,7 +32,7 @@ export const OnboardingStartForm = () => {
     email,
     document,
     // phoneNumber,
-    termsAndConditions,
+    terms: termsAndConditions,
   }: OnboardingStartData) => {
     const OnboardingStart = await onboardingStartAction({
       fullName: fullName,
@@ -54,11 +53,12 @@ export const OnboardingStartForm = () => {
 
   const { handleSubmit, control, formState } = useForm<OnboardingStartData>({
     resolver: zodResolver(OnboardingStartSchema),
-    mode: "onTouched",
+    mode: "all",
     defaultValues: {
       fullName: "",
       email: "",
       document: "",
+      terms: true,
       // phoneNumber: "",
     },
   });
@@ -160,26 +160,27 @@ export const OnboardingStartForm = () => {
               )}
             /> */}
             <Controller
-              name="termsAndConditions"
+              name="terms"
               control={control}
               render={({ field, fieldState }) => (
-                <FieldGroup data-invalid={fieldState.invalid}>
-                  <Field orientation={"horizontal"}>
-                    <Checkbox
-                      id="create-account-form-termsAndConditions"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      aria-invalid={fieldState.invalid}
-                      required
-                    />
-                    <FieldLabel>
-                      Eu li e aceito os termos e condições
-                    </FieldLabel>
-                  </Field>
+                <Field
+                  orientation={"horizontal"}
+                  data-invalid={fieldState.invalid}
+                  data-slot="checkbox"
+                >
+                  <Checkbox
+                    id="create-account-form-terms"
+                    name="terms"
+                    aria-invalid={fieldState.invalid}
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
+                    required
+                  />
+                  <FieldLabel>Eu li e aceito os termos e condições</FieldLabel>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
-                </FieldGroup>
+                </Field>
               )}
             />
           </FieldGroup>
@@ -190,7 +191,7 @@ export const OnboardingStartForm = () => {
           <Button
             type="submit"
             form="create-account-form"
-            disabled={formState.isSubmitting}
+            disabled={formState.isSubmitting || !formState.isValid}
           >
             Criar Conta
           </Button>
