@@ -8,7 +8,7 @@ interface OnboardingVerifyResponse {
 const API_URL = process.env.EXTERNAL_API_URL;
 
 export const onboardingVerifyAction = async (
-  token: string | null | undefined
+  token: string | undefined | null
 ): Promise<OnboardingVerifyResponse> => {
   if (!API_URL) {
     console.error("External API URL is not defined.");
