@@ -13,7 +13,7 @@ jobs:
       contents: read
       packages: write
 
-    uses: high-effort-low-stress/workflows/.github/workflows/next-build-test.yaml@main
+    uses: high-effort-low-stress/workflows/.github/workflows/nextjs-build-test.yaml@main
     with:
       image-name: ghcr.io/${{ github.repository }}
       sha: ${{ github.sha }}
