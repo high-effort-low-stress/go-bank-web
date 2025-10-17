@@ -1,8 +1,4 @@
 FROM node:22-alpine AS base
-
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -27,4 +23,4 @@ ENV PORT=3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
-CMD [ "pnpm", "start" ]
+CMD [ "node", "server.js" ]
