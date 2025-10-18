@@ -44,8 +44,13 @@ export const OnboardingCompleteForm = () => {
 
   const handleOnboardingComplete = async ({
     password,
+    confirmPassword,
   }: OnboardingCompleteData) => {
-    const onboardingComplete = await onboardingCompleteAction(password, token);
+    const onboardingComplete = await onboardingCompleteAction(
+      password,
+      confirmPassword,
+      token,
+    );
 
     if (!onboardingComplete.success)
       return toast.error("Erro ao criar conta.", {
