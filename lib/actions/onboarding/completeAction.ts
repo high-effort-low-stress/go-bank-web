@@ -2,47 +2,66 @@
 
 import { isPasswordValid } from "@/utils/validators";
 
-const URL = process.env.EXTERNAL_API_URL;
-
 type OnboardingCompleteResponse = {
   success: boolean;
   message: string;
 };
 
-export async function onboardingCompleteAction(
-  password: string,
-  token: string | null
-): Promise<OnboardingCompleteResponse> {
+type OnboardingCompleteRequest = {
+  token: string;
+  password: string;
+  confirmPassword: string;
+};
+
+export async function onboardingCompleteAction({
+  token,
+  password,
+  confirmPassword,
+}: OnboardingCompleteRequest): Promise<OnboardingCompleteResponse> {
+  const URL = process.env.EXTERNAL_API_URL;
+
+  if (!URL) {
+    return { success: false, message: "Server configuration error." };
+  }
+
+  if (!token) {
+    return { success: false, message: "Token must be provided." };
+  }
+
+  if (password !== confirmPassword) {
+    return { success: false, message: "Passwords do not match." };
+  }
+
+  if (!isPasswordValid(password)) {
+    return {
+      success: false,
+      message: "Password did not meet the requirements.",
+    };
+  }
+
   try {
-    if (!token) {
-      return { success: false, message: "Token de sessão não encontrado." };
-    }
-
-    if (!isPasswordValid(password)) {
-      return {
-        success: false,
-        message: "A senha não atende aos critérios de segurança.",
-      };
-    }
-
     const response = await fetch(`${URL}/onboarding/complete`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, password }),
+      body: JSON.stringify({ token, password, confirmPassword }),
     });
 
-    if (response.status === 400)
-      return { success: false, message: "Token expirado." };
+    if (!response.ok) {
+      return {
+        success: false,
+        message: await response.text(),
+      };
+    }
 
     return {
       success: true,
-      message: "Conta criada com sucesso!",
+      message: await response.text(),
     };
   } catch (error) {
-    console.error("Falha na API:", error);
+    console.error("API Error:", error);
     return {
       success: false,
-      message: "Não foi possível criar a senha. Tente novamente mais tarde.",
+      message: "An unexpected error occurred. Please try again later.",
     };
   }
 }
