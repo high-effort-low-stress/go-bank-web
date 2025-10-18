@@ -1,22 +1,20 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { OnboardingCreateUserStart } from "@/types/register";
 
-type OnboardingStart = {
+type OnboardingStartResponse = {
   success: boolean;
-  message: string;
-  data?: any;
+  description: string;
 };
-
-const URL = process.env.EXTERNAL_API_URL;
 
 export const onboardingStartAction = async (
   user: OnboardingCreateUserStart
-): Promise<OnboardingStart> => {
+): Promise<OnboardingStartResponse> => {
+  const URL = process.env.EXTERNAL_API_URL;
+
   if (!URL) {
     console.error("External API URL is not defined.");
-    return { success: false, message: "Erro de configuração no servidor." };
+    return { success: false, description: "Erro de configuração no servidor." };
   }
 
   try {
@@ -28,35 +26,19 @@ export const onboardingStartAction = async (
       body: JSON.stringify(user),
     });
 
-    if (response.status === 400)
-      return {
-        success: false,
-        message: "Dados inválidos. Por favor, verifique os campos.",
-      };
-
-    if (response.status === 409)
-      return { success: false, message: "O CPF ou E-mail já está cadastrado." };
-
     if (!response.ok) {
-      const errorData = await response.json();
-      const errorMessage =
-        errorData.message || "A API externa retornou um erro.";
-      return { success: false, message: errorMessage };
+      return { success: false, description: await response.text() };
     }
-
-    const responseData = await response.json();
-    revalidatePath("/");
 
     return {
       success: true,
-      message: "Conta criada com sucesso!",
-      data: responseData,
+      description: await response.text(),
     };
   } catch (error) {
     console.error("Falha na chamada fetch:", error);
     return {
       success: false,
-      message: "Não foi possível conectar ao servidor. Tente novamente.",
+      description: "Não foi possível conectar ao servidor. Tente novamente.",
     };
   }
 };

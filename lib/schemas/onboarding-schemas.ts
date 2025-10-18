@@ -11,11 +11,11 @@ export const OnboardingStartSchema = z.object({
   document: z
     .string()
     .nonempty({ error: "CPF é obrigatório." })
-    .refine(isCpfValid, "CPF deve ser um CPF válido."),
+    .refine(isCpfValid, "CPF inválido."),
   email: z
     .string()
     .nonempty({ error: "Email é obrigatório." })
-    .email("Email deve ser um email válido."),
+    .email("E-mail inválido."),
   terms: z.literal(true, { error: "Você deve aceitar os termos" }),
 });
 

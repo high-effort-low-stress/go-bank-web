@@ -42,7 +42,7 @@ export const OnboardingStartForm = () => {
 
     if (!OnboardingStart.success)
       return toast.error("Erro ao criar conta.", {
-        description: OnboardingStart.message,
+        description: OnboardingStart.description,
       });
 
     return toast.success("Conta criada com sucesso!", {
@@ -73,7 +73,10 @@ export const OnboardingStartForm = () => {
       </CardHeader>
       <CardContent>
         {" "}
-        <form onSubmit={handleSubmit(onboardingStart)} id="create-account-form">
+        <form
+          onSubmit={handleSubmit(onboardingStart)}
+          id="onboarding-start-form"
+        >
           <FieldGroup>
             <Controller
               name="fullName"
@@ -83,7 +86,7 @@ export const OnboardingStartForm = () => {
                   <FieldLabel htmlFor="fullName">Nome Completo</FieldLabel>
                   <Input
                     {...field}
-                    id="create-account-form-fullName"
+                    id="onboarding-start-form-fullName-field"
                     type="text"
                     aria-invalid={fieldState.invalid}
                     autoComplete="on"
@@ -103,7 +106,7 @@ export const OnboardingStartForm = () => {
                   <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
                     {...field}
-                    id="create-account-form-email"
+                    id="onboarding-start-form-email-field"
                     type="email"
                     aria-invalid={fieldState.invalid}
                     autoComplete="on"
@@ -123,12 +126,11 @@ export const OnboardingStartForm = () => {
                   <FieldLabel htmlFor="document">CPF</FieldLabel>
                   <Input
                     {...field}
-                    id="create-account-form-document"
+                    id="onboarding-start-form-document-field"
                     type="text"
                     aria-invalid={fieldState.invalid}
                     autoComplete="on"
                     placeholder="XXX.XXX.XXX-XX"
-                    maxLength={11}
                     required
                   />
                   {fieldState.invalid && (
@@ -137,28 +139,6 @@ export const OnboardingStartForm = () => {
                 </Field>
               )}
             />
-            {/* <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="tel">Telefone</FieldLabel>
-                  <Input
-                    {...field}
-                    id="create-account-form-phoneNumber"
-                    type="tel"
-                    aria-invalid={fieldState.invalid}
-                    autoComplete="on"
-                    plac-eholder="(XX) XXXXX-XXXX"
-                    maxLength={11}
-                    required
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            /> */}
             <Controller
               name="terms"
               control={control}
@@ -169,7 +149,7 @@ export const OnboardingStartForm = () => {
                   data-slot="checkbox"
                 >
                   <Checkbox
-                    id="create-account-form-terms"
+                    id="onboarding-start-form-terms-checkbox"
                     name="terms"
                     aria-invalid={fieldState.invalid}
                     onCheckedChange={field.onChange}
@@ -189,8 +169,9 @@ export const OnboardingStartForm = () => {
       <CardFooter>
         <Field orientation={"responsive"}>
           <Button
+            id="onboarding-start-form-button-submit"
             type="submit"
-            form="create-account-form"
+            form="onboarding-start-form"
             disabled={formState.isSubmitting || !formState.isValid}
           >
             Criar Conta
