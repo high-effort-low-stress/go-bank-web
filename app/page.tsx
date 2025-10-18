@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { SecuritySection } from "@/components/SecuritySection";
 
-export default function landingPage() {
+export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header
