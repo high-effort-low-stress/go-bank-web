@@ -19,9 +19,8 @@ export const OnboardingStartUserSchema = z.object({
     .refine(isCpfValid, "CPF inválido."),
 
   email: z
-    .string()
-    .nonempty({ error: "Email é obrigatório." })
-    .email("E-mail inválido."),
+    .email("E-mail inválido.")
+    .nonempty({ error: "Email é obrigatório." }),
 });
 
 export const OnboardingStartFormSchema = OnboardingStartUserSchema.extend({
