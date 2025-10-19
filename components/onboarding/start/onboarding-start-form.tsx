@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { onboardingStartAction } from "@/actions/onboarding/startAction";
@@ -25,8 +26,7 @@ import {
   type OnboardingStartForm,
   OnboardingStartFormSchema,
 } from "@/schemas/onboarding-schemas";
-
-export const OnboardingStartForm = () => {
+export const StartForm = () => {
   const onboardingStart = async ({
     fullName,
     email,
@@ -45,10 +45,12 @@ export const OnboardingStartForm = () => {
         description: OnboardingStart.description,
       });
 
-    return toast.success("Conta criada com sucesso!", {
+    toast.success("Conta criada com sucesso!", {
       description: "Enviamos um código de verificação para o seu email.",
       duration: 8000,
     });
+
+    redirect("/verify");
   };
 
   const { handleSubmit, control, formState } = useForm<OnboardingStartForm>({

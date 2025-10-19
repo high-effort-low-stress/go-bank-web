@@ -26,6 +26,10 @@ export const onboardingStartAction = async ({
       body: JSON.stringify(user),
     });
 
+    if (response.status === 409) {
+      return { success: false, description: "Usuário já cadastrado." };
+    }
+
     if (!response.ok) {
       return { success: false, description: await response.text() };
     }
