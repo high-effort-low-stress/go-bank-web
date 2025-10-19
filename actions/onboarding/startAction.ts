@@ -1,15 +1,15 @@
 "use server";
 
-import type { OnboardingCreateUserStart } from "@/types/register";
+import type { OnboardingStarUser } from "@/schemas/onboarding-schemas";
+import type { OnboardingResponse } from "@/types/onboarding-actions";
 
-type OnboardingStartResponse = {
-  success: boolean;
-  description: string;
+export type OnbardingStartRequest = {
+  user: OnboardingStarUser;
 };
 
-export const onboardingStartAction = async (
-  user: OnboardingCreateUserStart
-): Promise<OnboardingStartResponse> => {
+export const onboardingStartAction = async ({
+  user,
+}: OnbardingStartRequest): Promise<OnboardingResponse> => {
   const URL = process.env.EXTERNAL_API_URL;
 
   if (!URL) {

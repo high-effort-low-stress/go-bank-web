@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { onboardingCompleteAction } from "@/actions/onboarding/completeAction";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,11 +27,10 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { onboardingCompleteAction } from "@/lib/actions/onboarding/completeAction";
 import {
-  type OnboardingCompleteData,
+  type OnboardingComplete,
   OnboardingCompleteSchema,
-} from "@/lib/schemas/onboarding-schemas";
+} from "@/schemas/onboarding-schemas";
 
 export const OnboardingCompleteForm = () => {
   const [visible, setVisible] = useState(false);
@@ -45,16 +45,16 @@ export const OnboardingCompleteForm = () => {
   const handleOnboardingComplete = async ({
     password,
     confirmPassword,
-  }: OnboardingCompleteData) => {
-    const onboardingComplete = await onboardingCompleteAction(
+  }: OnboardingComplete) => {
+    const onboardingComplete = await onboardingCompleteAction({
       password,
       confirmPassword,
       token,
-    );
+    });
 
     if (!onboardingComplete.success)
       return toast.error("Erro ao criar conta.", {
-        description: onboardingComplete.message,
+        description: onboardingComplete.description,
       });
 
     setTimeout(() => {
@@ -69,7 +69,7 @@ export const OnboardingCompleteForm = () => {
       };
   };
 
-  const { handleSubmit, control, formState } = useForm<OnboardingCompleteData>({
+  const { handleSubmit, control, formState } = useForm<OnboardingComplete>({
     resolver: zodResolver(OnboardingCompleteSchema),
     mode: "all",
     defaultValues: {

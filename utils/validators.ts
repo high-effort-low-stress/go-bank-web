@@ -1,8 +1,5 @@
-const PASSWORD_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$/;
-
-const PHONE_NUMBER_REGEX =
-  /^(?:(?:\+?55\s?)?(?:\(?\d{2}\)?\s?)?)?(?:9\d{4}[-.\s]?\d{4})$/;
+export const isPasswordValid = (password: string): boolean =>
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,}$/.test(password);
 
 export const isCpfValid = (cpf: string): boolean => {
   // Limpa o CPF, removendo formatação
@@ -48,14 +45,4 @@ export const isCpfValid = (cpf: string): boolean => {
 
   // Se passou por todas as verificações, o CPF é válido
   return true;
-};
-
-export const isPhoneNumberValid = (phone: string): boolean => {
-  return PHONE_NUMBER_REGEX.test(phone);
-};
-
-export const isPasswordValid = (password: string): boolean => {
-  // "A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.",
-
-  return PASSWORD_REGEX.test(password);
 };
