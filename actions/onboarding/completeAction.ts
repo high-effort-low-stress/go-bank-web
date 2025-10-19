@@ -1,14 +1,10 @@
 "use server";
 
+import type { OnboardingResponse } from "@/types/onboarding-actions";
 import { isPasswordValid } from "@/utils/validators";
 
-type OnboardingCompleteResponse = {
-  success: boolean;
-  message: string;
-};
-
 type OnboardingCompleteRequest = {
-  token: string;
+  token?: string | null;
   password: string;
   confirmPassword: string;
 };
@@ -17,25 +13,25 @@ export async function onboardingCompleteAction({
   token,
   password,
   confirmPassword,
-}: OnboardingCompleteRequest): Promise<OnboardingCompleteResponse> {
+}: OnboardingCompleteRequest): Promise<OnboardingResponse> {
   const URL = process.env.EXTERNAL_API_URL;
 
   if (!URL) {
-    return { success: false, message: "Server configuration error." };
+    return { success: false, description: "Server configuration error." };
   }
 
   if (!token) {
-    return { success: false, message: "Token must be provided." };
+    return { success: false, description: "Token must be provided." };
   }
 
   if (password !== confirmPassword) {
-    return { success: false, message: "Passwords do not match." };
+    return { success: false, description: "Passwords do not match." };
   }
 
   if (!isPasswordValid(password)) {
     return {
       success: false,
-      message: "Password did not meet the requirements.",
+      description: "Password did not meet the requirements.",
     };
   }
 
@@ -47,21 +43,17 @@ export async function onboardingCompleteAction({
     });
 
     if (!response.ok) {
-      return {
-        success: false,
-        message: await response.text(),
-      };
+      return { success: false, description: await response.text() };
     }
 
     return {
       success: true,
-      message: await response.text(),
+      description: await response.text(),
     };
   } catch (error) {
-    console.error("API Error:", error);
     return {
       success: false,
-      message: "An unexpected error occurred. Please try again later.",
+      description: `An unexpected error occurred. Error: ${error} `,
     };
   }
 }

@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { onboardingStartAction } from "@/actions/onboarding/startAction";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,24 +21,23 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { onboardingStartAction } from "@/lib/actions/onboarding/startAction";
 import {
-  type OnboardingStartData,
-  OnboardingStartSchema,
-} from "@/lib/schemas/onboarding-schemas";
+  type OnboardingStartForm,
+  OnboardingStartFormSchema,
+} from "@/schemas/onboarding-schemas";
 
 export const OnboardingStartForm = () => {
   const onboardingStart = async ({
     fullName,
     email,
     document,
-    // phoneNumber,
-    terms: termsAndConditions,
-  }: OnboardingStartData) => {
+  }: OnboardingStartForm) => {
     const OnboardingStart = await onboardingStartAction({
-      fullName: fullName,
-      email: email,
-      document: document,
+      user: {
+        fullName,
+        email,
+        document,
+      },
     });
 
     if (!OnboardingStart.success)
@@ -51,15 +51,14 @@ export const OnboardingStartForm = () => {
     });
   };
 
-  const { handleSubmit, control, formState } = useForm<OnboardingStartData>({
-    resolver: zodResolver(OnboardingStartSchema),
+  const { handleSubmit, control, formState } = useForm<OnboardingStartForm>({
+    resolver: zodResolver(OnboardingStartFormSchema),
     mode: "all",
     defaultValues: {
       fullName: "",
       email: "",
       document: "",
-      terms: true,
-      // phoneNumber: "",
+      terms: false,
     },
   });
 
