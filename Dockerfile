@@ -11,7 +11,6 @@ RUN adduser --system --uid 1001 nextjs
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --chown=nextjs:nodejs standalone ./
-COPY --chown=nextjs:nodejs static ./.next/static
 COPY --chown=nextjs:nodejs public ./public
 
 
